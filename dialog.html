@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+</head>
+<body>
+
+<div id="list"></div>
+<div id="items"></div>
+<script type="text/javascript">
+
+google.script.run
+        .withSuccessHandler(functionToRun)
+        .returnDOM();
+function functionToRun(argument) {
+
+        let parser = new DOMParser();
+        let parsedHTML = parser.parseFromString(argument, 'text/html');
+
+        tms = parsedHTML.getElementsByClassName("menu-button goog-control goog-inline-block");
+        arr = Array.from(tms).map(x => x.innerText);
+        arr.splice(9,1);
+        
+        verts = parsedHTML.getElementsByClassName("goog-menu goog-menu-vertical docs-material")
+        interim = Array.from(verts).map(x => x.childNodes);
+        var second = new Array(interim.length);
+        for(i=0;i<interim.length;i++){
+          second[i] = Array.from(interim[i]).map(x => x.innerText);
+        }
+        second.splice(0,1);
+        second.splice(11,3);
+        second.splice(9,2);
+        var filtered = new Array(second.length);
+        for(i=0;i<second.length;i++){
+          filtered[i] = second[i].filter(function (el) {
+            return el != "";
+          });
+        }
+        /*third = parsedHTML.getElementsByClassName("goog-menuitem apps-menuitem")
+        result = Array.from(third).map(x => x.innerText)
+        console.log(result);*/
+        tool = parsedHTML.getElementsByClassName("goog-toolbar-button goog-inline-block");
+        toolbar = Array.from(tool).map(x => x.ariaLabel);
+        toolbar.splice(29,1);
+        
+        
+let createButton = (context, label, func) => {
+  let btn = document.createElement("BUTTON");
+  btn.type = "button";
+  btn.innerHTML = label;
+  btn.onclick = func;
+  context.appendChild(btn);
+}
+
+arr.forEach((menu) => {
+  let elem = document.getElementById("list");
+  createButton(elem,menu,function() {
+    populateMenu(menu);
+  });
+});
+
+let populateMenu = (menu) => {
+  let index = arr.indexOf(menu);
+  if(index!=-1){
+    for(i=0;i<filtered[index].length;i++){
+      let item = filtered[index][i];
+      createButton(document.getElementById("items"),item, function() {
+        populateLevel(item);
+      });
+    }
+  }
+}
+toolbar.forEach((toolitem) => {
+  createButton(document.getElementById("toggle"),toolitem, function() {
+    populateTool(toolitem);
+  });
+});
+}
+</script>
+<div id="toggle"></div>
+</body>
+</html>
