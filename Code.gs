@@ -6,7 +6,7 @@ function onOpen() {
 }
 
 function openDialog() {
-  var html = HtmlService.createHtmlOutputFromFile('dialog').setWidth(800).setHeight(1500);
+  var html = HtmlService.createHtmlOutputFromFile('dialog');
   DocumentApp.getUi()
             .showModalDialog(html, 'Menu Listing')
 }
