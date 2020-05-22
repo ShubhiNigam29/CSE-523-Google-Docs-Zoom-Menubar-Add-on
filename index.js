@@ -1,3 +1,4 @@
+// Google Cloud Function
 const puppeteer = require('puppeteer');
 let page ;
 
