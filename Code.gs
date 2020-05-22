@@ -1,4 +1,3 @@
-// Base Code.gs file_v0
 function onOpen() {
   DocumentApp.getUi()
       .createMenu('Menu')
