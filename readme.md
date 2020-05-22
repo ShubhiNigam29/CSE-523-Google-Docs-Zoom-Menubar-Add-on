@@ -13,3 +13,5 @@ Runtime: Node.js 8
 8.	Go to Trigger tab and capture the URL generated.
 9.	Use this URL in Code.gs to fetch resources using UrlFetchApp API.
 10.	Run the onOpen() function as Test as Add-on.
+===========================================================================================================================================
+Run Puppeteer Google Auth file on https://puppeteersandbox.com/ to check and closely monitor the step-by-step google authentication process.
